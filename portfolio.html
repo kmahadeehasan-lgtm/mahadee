@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header-content .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .header-content .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-tabs .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 20px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+            background-color: var(--bg-light);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: white;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+        }
+
+        /* About/Bio Section */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .bio-card {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .bio-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .bio-card p, .bio-card ul {
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .bio-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .bio-card ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .bio-card ul li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .skill-category {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category h3::before {
+            content: "◆";
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .project-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .tech-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .project-features {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .project-features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .project-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Education Section */
+        .education-timeline {
+            margin-top: 30px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .education-timeline::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-color);
+        }
+
+        .education-item {
+            background: var(--bg-light);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .education-item::before {
+            content: "";
+            position: absolute;
+            left: -34px;
+            top: 25px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--primary-color);
+        }
+
+        .education-item:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .education-item h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .education-item .institution {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .education-item .gpa {
+            color: var(--success-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Contact/Links Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .contact-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-card:hover {
+            background: white;
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .contact-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .contact-card a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .contact-card a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .header-content .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-button {
+                padding: 15px 20px;
+                font-size: 0.9rem;
+            }
+
+            .content-section {
+                padding: 25px;
+                margin: 20px auto;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <h1>Full-Stack Developer</h1>
+            <div class="subtitle">Java • Spring Boot • Flutter • Angular</div>
+            <p class="tagline">
+                Highly motivated professional with a Master's degree, specializing in building scalable web and mobile solutions. 
+                Committed to leveraging modern frameworks to create intuitive, user-centric applications.
+            </p>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <button class="tab-button active" onclick="openTab(event, 'about')">About</button>
+            <button class="tab-button" onclick="openTab(event, 'skills')">Technical Skills</button>
+            <button class="tab-button" onclick="openTab(event, 'projects')">Projects</button>
+            <button class="tab-button" onclick="openTab(event, 'education')">Education</button>
+            <button class="tab-button" onclick="openTab(event, 'contact')">Contact & Links</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- About Tab -->
+        <div id="about" class="tab-content active">
+            <section class="content-section">
+                <h2 class="section-title">About Me</h2>
+                <div class="bio-grid">
+                    <div class="bio-card">
+                        <h3>Career Objective</h3>
+                        <p>
+                            Highly motivated Professional with a Master's degree from Jahangirnagar University. 
+                            Seeking to leverage a strong foundation in Object-Oriented Programming (Java) and 
+                            Spring Boot to develop scalable web and mobile solutions. Committed to using technical 
+                            expertise in modern frameworks like Flutter and Angular to build intuitive, user-centric applications.
+                        </p>
+                    </div>
+                    <div class="bio-card">
+                        <h3>Professional Competencies</h3>
+                        <ul>
+                            <li>System Analysis: Proficient in UML for software architecture</li>
+                            <li>Database Management: Experienced in Oracle 19c and MySQL development</li>
+                            <li>Full-Stack Integration: Connecting Hibernate logic to Angular and Flutter frontends</li>
+                            <li>Research: Strong ability to produce technical documents</li>
+                        </ul>
+                    </div>
+                    <div class="bio-card">
+                        <h3>Language Proficiency</h3>
+                        <ul>
+                            <li><strong>Bangla:</strong> Mother Tongue</li>
+                            <li><strong>English:</strong> Second Language</li>
+                            <li><strong>Reading/Writing:</strong> Excellent</li>
+                            <li><strong>Verbal:</strong> Good</li>
+                        </ul>
+                    </div>
+                    <div class="bio-card">
+                        <h3>What I Bring</h3>
+                        <p>
+                            A unique combination of technical expertise and strong communication skills, backed by 
+                            advanced degrees in both technology and linguistics. I excel at translating complex technical 
+                            requirements into elegant, maintainable code while ensuring clear documentation and effective 
+                            team collaboration.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Skills Tab -->
+        <div id="skills" class="tab-content">
+            <section class="content-section">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Backend Development</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Java (OOP)</span>
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">Servlet</span>
+                            <span class="skill-tag">JSP</span>
+                            <span class="skill-tag">JSF</span>
+                            <span class="skill-tag">Hibernate</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Frontend Development</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">Bootstrap</span>
+                            <span class="skill-tag">Angular</span>
+                            <span class="skill-tag">XML</span>
+                            <span class="skill-tag">Web Publishing</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Mobile Development</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Flutter</span>
+                            <span class="skill-tag">Android Studio</span>
+                            <span class="skill-tag">Firebase</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Database & Design</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Oracle 19c</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">UML</span>
+                            <span class="skill-tag">System Analysis</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools & Reporting</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">JasperReports</span>
+                            <span class="skill-tag">MS Office</span>
+                            <span class="skill-tag">Git</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Security & Authentication</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">JWT</span>
+                            <span class="skill-tag">Spring Security</span>
+                            <span class="skill-tag">RBAC</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content">
+            <section class="content-section">
+                <h2 class="section-title">Key Technical Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Full-Stack Banking Management Web App</h3>
+                        <div class="project-tech">
+                            <span class="tech-badge">Spring Boot</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Angular</span>
+                            <span class="tech-badge">JWT</span>
+                        </div>
+                        <ul class="project-features">
+                            <li>Developed a secure banking system using JWT Token authentication and Spring Security</li>
+                            <li>Implemented Role-Based Access Control (RBAC) with branch-level authorization based on Branch IDs</li>
+                            <li>Built comprehensive user management and transaction processing features</li>
+                            <li>Integrated RESTful APIs for seamless frontend-backend communication</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Cross-Platform Mobile Banking System</h3>
+                        <div class="project-tech">
+                            <span class="tech-badge">Spring Boot</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Flutter</span>
+                        </div>
+                        <ul class="project-features">
+                            <li>Engineered a backend-driven mobile application enabling real-time banking transactions</li>
+                            <li>Integrated complex business logic for branch authorization and secure data fetching</li>
+                            <li>Designed responsive UI/UX for optimal user experience across devices</li>
+                            <li>Implemented offline-first architecture with data synchronization</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card">
+                        <h3>Firebase Mobile Banking App</h3>
+                        <div class="project-tech">
+                            <span class="tech-badge">Flutter</span>
+                            <span class="tech-badge">Firebase</span>
+                            <span class="tech-badge">Cloud Firestore</span>
+                        </div>
+                        <ul class="project-features">
+                            <li>Built a lightweight mobile app with separate Admin and Customer interfaces</li>
+                            <li>Managed local business logic and real-time database synchronization via Firebase</li>
+                            <li>Implemented push notifications for transaction alerts and updates</li>
+                            <li>Utilized Firebase Authentication for secure user access</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 40px; background: linear-gradient(135deg, #eff6ff, #dbeafe); border-left: 5px solid var(--primary-color);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">🔗 View My Code</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-dark);">
+                        All projects are available on GitHub with comprehensive documentation, clean code, and detailed README files.
+                    </p>
+                    <a href="#contact" onclick="openTab(event, 'contact')" 
+                       style="display: inline-block; background: var(--primary-color); color: white; padding: 12px 30px; 
+                              border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        Connect with Me on GitHub
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Education Tab -->
+        <div id="education" class="tab-content">
+            <section class="content-section">
+                <h2 class="section-title">Educational Background</h2>
+                <div class="education-timeline">
+                    <div class="education-item">
+                        <h3>MA in Applied Linguistics & ELT</h3>
+                        <div class="institution">Jahangirnagar University</div>
+                        <div class="gpa">CGPA: 3.22/4.00</div>
+                        <p style="margin-top: 10px; color: var(--text-light);">
+                            Advanced studies in linguistics, language teaching methodologies, and communication theory.
+                        </p>
+                    </div>
+
+                    <div class="education-item">
+                        <h3>BA in English Language & Literature</h3>
+                        <div class="institution">Jahangirnagar University</div>
+                        <div class="gpa">CGPA: 3.11/4.00</div>
+                        <p style="margin-top: 10px; color: var(--text-light);">
+                            Comprehensive study of English literature, critical analysis, and effective communication.
+                        </p>
+                    </div>
+
+                    <div class="education-item">
+                        <h3>Higher School Certificate (Science)</h3>
+                        <div class="institution">Metropolitan School and College</div>
+                        <div class="gpa">GPA: 4.90/5.00</div>
+                        <p style="margin-top: 10px; color: var(--text-light);">
+                            Strong foundation in science, mathematics, and analytical thinking.
+                        </p>
+                    </div>
+
+                    <div class="education-item">
+                        <h3>Secondary School Certificate (Science)</h3>
+                        <div class="institution">Dolairpar High School</div>
+                        <div class="gpa">GPA: 4.88/5.00</div>
+                        <p style="margin-top: 10px; color: var(--text-light);">
+                            Excellent academic performance with focus on science and technology subjects.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Tab -->
+        <div id="contact" class="tab-content">
+            <section class="content-section">
+                <h2 class="section-title">Contact & Links</h2>
+                <p style="margin-bottom: 30px; color: var(--text-dark); font-size: 1.1rem;">
+                    Let's connect! I'm always open to discussing new projects, opportunities, or collaborations.
+                </p>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="icon">💼</div>
+                        <h3>GitHub</h3>
+                        <p style="color: var(--text-light); margin-bottom: 10px;">View my code & projects</p>
+                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+                            github.com/yourusername
+                        </a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="icon">💻</div>
+                        <h3>LinkedIn</h3>
+                        <p style="color: var(--text-light); margin-bottom: 10px;">Professional network</p>
+                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+                            linkedin.com/in/yourprofile
+                        </a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="icon">📧</div>
+                        <h3>Email</h3>
+                        <p style="color: var(--text-light); margin-bottom: 10px;">Get in touch directly</p>
+                        <a href="mailto:your.email@example.com">
+                            your.email@example.com
+                        </a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="icon">🌐</div>
+                        <h3>Portfolio</h3>
+                        <p style="color: var(--text-light); margin-bottom: 10px;">More about my work</p>
+                        <a href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer">
+                            yourwebsite.com
+                        </a>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 40px; background: var(--bg-light);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 20px;">📝 Professional References</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                        <div style="padding: 20px; background: white; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                            <h4 style="color: var(--text-dark); margin-bottom: 10px;">Dr. Md. Maniruzzaman</h4>
+                            <p style="color: var(--text-light); margin-bottom: 5px;">Professor, Dept. of English</p>
+                            <p style="color: var(--text-light); margin-bottom: 5px;">Jahangirnagar University</p>
+                            <p style="color: var(--primary-color); font-weight: 600;">📞 01711337559</p>
+                            <p style="color: var(--primary-color); font-weight: 600;">✉️ mmz71@juniv.edu</p>
+                        </div>
+                        <div style="padding: 20px; background: white; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                            <h4 style="color: var(--text-dark); margin-bottom: 10px;">Ahmed Reza</h4>
+                            <p style="color: var(--text-light); margin-bottom: 5px;">Professor, Dept. of English</p>
+                            <p style="color: var(--text-light); margin-bottom: 5px;">Jahangirnagar University</p>
+                            <p style="color: var(--primary-color); font-weight: 600;">📞 01712492888</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Full-Stack Developer Portfolio. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">
+                Built with passion using HTML, CSS, and JavaScript
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function openTab(event, tabName) {
+            // Hide all tab content
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            // Remove active class from all buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            // Show the selected tab and mark button as active
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // Smooth scroll to top of content
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.includes('contact')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', function(event) {
+            const tabButtons = Array.from(document.getElementsByClassName('tab-button'));
+            const activeButton = document.querySelector('.tab-button.active');
+            const currentIndex = tabButtons.indexOf(activeButton);
+
+            if (event.key === 'ArrowRight' && currentIndex < tabButtons.length - 1) {
+                tabButtons[currentIndex + 1].click();
+            } else if (event.key === 'ArrowLeft' && currentIndex > 0) {
+                tabButtons[currentIndex - 1].click();
+            }
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.bio-card, .skill-category, .project-card, .education-item, .contact-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
